@@ -12,13 +12,16 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet private weak var textField1: UITextField!
     @IBOutlet private weak var textField2: UITextField!
     @IBOutlet private weak var tableView: UITableView!
+    // グローバル定数にしておく
     let realm = try! Realm()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let UserDate = realm.objects(User.self)
-        print("全てのデータ\(UserDate)")
-
+        // let UserDate = realm.objects(User.self)
+        // print("全てのデータ\(UserDate)")
+        print(Realm.Configuration.defaultConfiguration.fileURL)
     }
+
     @IBAction func didTapButton(_ sender: Any) {
         let user = User()
         try! realm.write({
@@ -29,6 +32,10 @@ class ViewController: UIViewController, UITableViewDataSource {
         print(user)
         textField1.text = ""
         textField2.text = ""
+        tableView.reloadData()
+    }
+
+    @IBAction func deleteDidTapButton(_ sender: Any) {
         tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
